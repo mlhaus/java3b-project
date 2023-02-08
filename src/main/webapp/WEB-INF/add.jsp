@@ -14,12 +14,12 @@
     if(results == null) {
         results = new HashMap<>();
     }
-    String firstNumber = results.containsKey("firstNumber") ? results.get("firstNumber") : "";
-    String secondNumber = results.containsKey("secondNumber") ? results.get("secondNumber") : "";
-    String num1Error = results.containsKey("num1Error") ? results.get("num1Error") : "";
-    String num2Error = results.containsKey("num2Error") ? results.get("num2Error") : "";
-    String num1IsInvalid = results.containsKey("num1Error") ? "is-invalid" : "";
-    String num2IsInvalid = results.containsKey("num2Error") ? "is-invalid" : "";
+//    String firstNumber = results.containsKey("firstNumber") ? results.get("firstNumber") : "";
+//    String secondNumber = results.containsKey("secondNumber") ? results.get("secondNumber") : "";
+//    String num1Error = results.containsKey("num1Error") ? results.get("num1Error") : "";
+//    String num2Error = results.containsKey("num2Error") ? results.get("num2Error") : "";
+//    String num1IsInvalid = results.containsKey("num1Error") ? "is-invalid" : "";
+//    String num2IsInvalid = results.containsKey("num2Error") ? "is-invalid" : "";
 %>
 <!doctype html>
 <html lang="en">

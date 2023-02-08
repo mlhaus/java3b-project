@@ -2,12 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Table of Contents</title>
 </head>
 <body>
-<h1><%= "Hello Amy!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<h1>Table of Contents</h1>
+<h3>Chapters 3 and 4</h3>
+<ul>
+    <li><a href="add">Adding App</a></li>
+    <li><a href="temp">Temperature Converter</a></li>
+    <li><a href="bmi">BMI Calculator</a></li>
+</ul>
 </body>
 </html>

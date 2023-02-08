@@ -17,5 +17,8 @@
         <servlet-name>BMIServlet</servlet-name>
         <url-pattern>/body-mass</url-pattern>
     </servlet-mapping>
-
+    <error-page>
+        <error-code>404</error-code>
+        <location>/file-not-found.html</location>
+    </error-page>
 </web-app>
