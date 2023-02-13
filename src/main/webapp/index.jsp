@@ -11,7 +11,7 @@
     <li><a href="add">Adding App</a></li>
     <li><a href="temp">Temperature Converter</a></li>
     <li><a href="bmi">BMI Calculator</a></li>
-    <li><a href="send-sms">Send a Text Message</a></li>
+    <li><a href="send-message">Send a Message</a></li>
 </ul>
 </body>
 </html>
