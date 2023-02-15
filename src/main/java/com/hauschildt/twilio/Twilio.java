@@ -1,5 +1,6 @@
 package com.hauschildt.twilio;
 
+import com.twilio.exception.ApiException;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -10,7 +11,7 @@ public class Twilio {
     private String secretKey;
     
     public Twilio() {
-        Dotenv dotenv = Dotenv.configure().load();
+        Dotenv dotenv = Dotenv.load();
         fromPhone = dotenv.get("TWILIO_PHONE");
         sid = dotenv.get("TWILIO_SID");
         secretKey = dotenv.get("TWILIO_KEY");
@@ -28,9 +29,13 @@ public class Twilio {
             phone = "1" + phone;
         }
         
-        Message message = Message.creator(new PhoneNumber("+" + phone),
-                new PhoneNumber(fromPhone),
-                msg).create();
+        try {
+            Message message = Message.creator(new PhoneNumber("+" + phone),
+                    new PhoneNumber(fromPhone),
+                    msg).create();
+        } catch(ApiException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
     
     public boolean isValidMessage(String message) {
