@@ -13,5 +13,9 @@
     <li><a href="bmi">BMI Calculator</a></li>
     <li><a href="send-message">Send a Message</a></li>
 </ul>
+<h3>Chapters 5</h3>
+<ul>
+    <li><a href="view-users">View All Users</a></li>
+</ul>
 </body>
 </html>

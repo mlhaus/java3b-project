@@ -1,10 +1,12 @@
 package com.hauschildt.data_access;
 
+import com.hauschildt.ch5.User;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface DAO_MySQL<T> {
     default Connection getConnection() throws SQLException {
@@ -14,7 +16,7 @@ public interface DAO_MySQL<T> {
         String db_port = dotenv.get("DB_PORT");
         String db_name = dotenv.get("DB_NAME");
         String db_user = dotenv.get("DB_USER");
-        String db_password = dotenv.get("DB_PASSWORD");
+        String db_password = dotenv.get("DB_PASSWORD"); // changed DB_PASSWORD to DB_PASS
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch(ClassNotFoundException e) {
@@ -26,4 +28,5 @@ public interface DAO_MySQL<T> {
         conn = DriverManager.getConnection(connStr,db_user,db_password);
         return conn;
     }
+    List<T> getAll();
 }
