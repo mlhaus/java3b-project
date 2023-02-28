@@ -24,7 +24,7 @@
         <p class="lead text-light">There <%= users.size() == 1 ? "is" : "are" %> <%= users.size() %> user<%= users.size() != 1 ? "s" : ""  %></p>
 
         <% for(User user: users) { %>
-        <ul class="list-group mb-4 col-md-6">
+        <ul class="list-group mb-4 col-md-4">
             <li class="list-group-item active">Name: <%= user.getFirst_name() %> <%= user.getLast_name()%></li>
             <li class="list-group-item">ID: <%= user.getId() %></li>
             <li class="list-group-item">Email: <%= user.getEmail() %></li>

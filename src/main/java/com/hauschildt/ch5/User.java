@@ -1,5 +1,7 @@
 package com.hauschildt.ch5;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 public class User {
     private int id;
     private String first_name;
@@ -42,14 +44,10 @@ public class User {
         if(first_name.length() == 0) {
             throw new IllegalArgumentException("First name required");
         }
-        // https://stackoverflow.com/questions/5963228/regex-for-names-with-special-characters-unicode
-//        if(!first_name.matches("[a-zA-Z\\xC0-\\uFFFF]")) {
-//            throw new IllegalArgumentException("Invalid characters in first name");
-//        }
         if(first_name.length() > 50) {
             throw new IllegalArgumentException("Last name cannot have more than 50 characters");
         }
-        this.first_name = first_name;
+        this.first_name = StringEscapeUtils.escapeHtml4(first_name);
     }
 
     public String getLast_name() {
@@ -60,13 +58,10 @@ public class User {
         if(last_name.length() == 0) {
             throw new IllegalArgumentException("Last name required");
         }
-//        if(!last_name.matches("^(?:[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s[\\p{L}\\p{Mn}\\p{Pd}\\'\\x{2019}]+\\s?)+$")) {
-//            throw new IllegalArgumentException("Invalid characters in last name");
-//        }
         if(last_name.length() > 50) {
             throw new IllegalArgumentException("Last name cannot have more than 50 characters");
         }
-        this.last_name = last_name;
+        this.last_name = StringEscapeUtils.escapeHtml4(last_name);
     }
 
     public String getEmail() {
