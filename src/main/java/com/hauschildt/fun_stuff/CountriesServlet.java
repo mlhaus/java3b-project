@@ -18,48 +18,58 @@ public class CountriesServlet extends HttpServlet {
         if(countries == null) {
             countries = CountryDAO_CSV.getAll(request, response);
         }
+        // https://stackoverflow.com/questions/715650/how-to-clone-arraylist-and-also-clone-its-contents
+        List<Country> countriesCopy = new ArrayList<>(countries.size());
+        for(Country country: countries) {
+            try {
+                countriesCopy.add((Country)country.clone());
+            } catch(CloneNotSupportedException e) {
+
+            }
+        }
+
+
         String show = request.getParameter("show");
         if(show == null) {
             show = "all";
         }
-        show = show.replaceAll("\\+", " ");
-        if(show.equals("all")) {
-            request.setAttribute("countries", countries);
-        } else {
-            // https://stackoverflow.com/questions/715650/how-to-clone-arraylist-and-also-clone-its-contents
-            List<Country> countriesFiltered = new ArrayList<>(countries.size());
-            for(Country country: countries) {
-                try {
-                    countriesFiltered.add((Country)country.clone());
-                } catch(CloneNotSupportedException e) {
-
-                }
-            }
-            String finalShow = show; // an effectively final variable that can be used with a lambda expression
-            countriesFiltered.removeIf(country -> !country.getContinent().equals(finalShow));
-            request.setAttribute("countries", countriesFiltered);
-        }
+        if(!show.equalsIgnoreCase("all")) {
+            String showTemp = show;
+            String finalShow = showTemp.replaceAll("\\+", " "); // an effectively final variable that can be used with a lambda expression
+            countriesCopy.removeIf(country -> !country.getContinent().equals(finalShow));
+        } 
 
         String sort = request.getParameter("sort");
-        if(sort != null) {
-            switch (sort) {
-                case "alphaAZ":
-                    countries.sort((c1, c2) -> c1.getName().compareTo(c2.getName()));
-                    break;
-                case "alphaZA":
-                    countries.sort((c1, c2) -> c1.getName().compareTo(c2.getName()) * -1);
-                    break;
-                case "populationAsc":
-                    countries.sort((c1, c2) -> c1.getPopulation() - c2.getPopulation());
-                    break;
-                case "populationDesc":
-                    countries.sort((c1, c2) -> c2.getPopulation() - c1.getPopulation());
-                    break;
-            }
+        if(sort == null) {
+            sort = "alphaAZ";
         }
-
-
-
+        switch (sort) {
+            case "alphaAZ":
+                countriesCopy.sort((c1, c2) -> c1.getName().compareTo(c2.getName()));
+                break;
+            case "alphaZA":
+                countriesCopy.sort((c1, c2) -> c1.getName().compareTo(c2.getName()) * -1);
+                break;
+            case "populationAsc":
+                countriesCopy.sort((c1, c2) -> c1.getPopulation() - c2.getPopulation());
+                break;
+            case "populationDesc":
+                countriesCopy.sort((c1, c2) -> c2.getPopulation() - c1.getPopulation());
+                break;
+        }
+        
+        String search = request.getParameter("search");
+        if(search != null) {
+            String finalSearch = search;
+            countriesCopy.removeIf(country -> !country.getName().toLowerCase().contains(finalSearch.toLowerCase()));
+        } else {
+            search = "";
+        }
+        
+        request.setAttribute("search", search);
+        request.setAttribute("show", show);
+        request.setAttribute("sort", sort);
+        request.setAttribute("countries", countriesCopy);
         request.getRequestDispatcher("WEB-INF/funstuff/countries.jsp").forward(request, response);
     }
 }
