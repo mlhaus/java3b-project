@@ -24,9 +24,7 @@ public class CountryDAO_CSV {
                     String name = dataStr[0];
                     String continent = dataStr[2];
                     int population = Integer.parseInt(dataStr[5]);
-                    String latitude = dataStr[7];
-                    String longitude = dataStr[8];
-                    Country country = new Country(name, continent, population, latitude, longitude);
+                    Country country = new Country(name, continent, population);
                     countries.add(country);
                 }
             }

@@ -21,6 +21,7 @@
 <h3>Fun Stuff</h3>
 <ul>
     <li><a href="countries">Countries App</a></li>
+    <li><a href="artist">Spotify App</a></li>
 </ul>
 
 </body>

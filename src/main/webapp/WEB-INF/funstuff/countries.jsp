@@ -75,8 +75,6 @@
                         data-title="<%= country.getName() %>"
                         data-population="<%= country.getPopulation() %>"
                         data-region="<%= country.getContinent() %>"
-                        data-latitude="<%= country.getLatitude() %>"
-                        data-longitude="<%= country.getLongitude() %>"
                     >
                         Show more
                     </button>
@@ -97,7 +95,6 @@
             <div class="modal-body">
                 <p>Region: <span class="modal-region"></span>
                 <br>Population: <span class="modal-population"></span></p>
-                <span class="modal-map"></span>
             </div>
         </div>
     </div>
