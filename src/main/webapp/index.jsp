@@ -22,6 +22,7 @@
 <ul>
     <li><a href="countries">Countries App</a></li>
     <li><a href="artist">Spotify App</a></li>
+    <li><a href="chat">Chat App</a></li>
 </ul>
 
 </body>
