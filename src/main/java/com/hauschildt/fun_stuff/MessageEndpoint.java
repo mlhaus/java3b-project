@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ServerEndpoint(
-        value = "/messageEndpoint",
+        value = "/chat/messageEndpoint",
         encoders = {MessageEncoder.class},
         decoders = {MessageDecoder.class}
 )
