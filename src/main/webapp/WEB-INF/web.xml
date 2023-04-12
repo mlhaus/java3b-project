@@ -21,4 +21,8 @@
         <error-code>404</error-code>
         <location>/file-not-found.html</location>
     </error-page>
+    <session-config>
+        <session-timeout>60</session-timeout>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
 </web-app>

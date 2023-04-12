@@ -1,28 +1,38 @@
 package com.hauschildt.ch5;
 
-import org.apache.commons.text.StringEscapeUtils;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User {
     private int id;
     private String first_name;
     private String last_name;
     private String email;
-    private String phone;
     private char[] password;
     private String status;
+    private String privileges;
 
     public User() {
-        this(0,"John","Doe","john@example.com","555-555-5555", "Passw0rd".toCharArray(), "inactive");
+        this(0,"John","Doe","john@example.com","Passw0rd".toCharArray(), "inactive", "none");
     }
 
-    public User(int id, String first_name, String last_name, String email, String phone, char[] password, String status) {
+    public User(int id, String first_name, String last_name, String email,char[] password, String status, String privileges) {
         setId(id);
         setFirst_name(first_name);
         setLast_name(last_name);
         setEmail(email);
-        setPhone(phone);
         setPassword(password);
         setStatus(status);
+        setPrivileges(privileges);
+    }
+
+    public User(int id, String first_name, String last_name, String email, String status, String privileges) {
+        setId(id);
+        setFirst_name(first_name);
+        setLast_name(last_name);
+        setEmail(email);
+        setStatus(status);
+        setPrivileges(privileges);
     }
 
     public int getId() {
@@ -44,10 +54,10 @@ public class User {
         if(first_name.length() == 0) {
             throw new IllegalArgumentException("First name required");
         }
-        if(first_name.length() > 50) {
-            throw new IllegalArgumentException("Last name cannot have more than 50 characters");
+        if(first_name.length() > 100) {
+            throw new IllegalArgumentException("Last name cannot have more than 100 characters");
         }
-        this.first_name = StringEscapeUtils.escapeHtml4(first_name);
+        this.first_name = first_name;
     }
 
     public String getLast_name() {
@@ -58,10 +68,10 @@ public class User {
         if(last_name.length() == 0) {
             throw new IllegalArgumentException("Last name required");
         }
-        if(last_name.length() > 50) {
-            throw new IllegalArgumentException("Last name cannot have more than 50 characters");
+        if(last_name.length() > 100) {
+            throw new IllegalArgumentException("Last name cannot have more than 100 characters");
         }
-        this.last_name = StringEscapeUtils.escapeHtml4(last_name);
+        this.last_name = last_name;
     }
 
     public String getEmail() {
@@ -69,26 +79,18 @@ public class User {
     }
 
     public void setEmail(String email) {
-        // https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
-//        if(!email.matches("^([\\w\\!\\#$\\%\\&\\'\\*\\+\\-\\/\\=\\?\\^\\`{\\|\\}\\~]+\\.)*[\\w\\!\\#$\\%\\&\\'\\*\\+\\-\\/\\=\\?\\^\\`{\\|\\}\\~]+@((((([a-z0-9]{1}[a-z0-9\\-]{0,62}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,6})|(\\d{1,3}\\.){3}\\d{1,3}(\\:\\d{1,5})?)$")) {
-//            throw new IllegalArgumentException("Invalid email address");
-//        }
+        //Set the email pattern string
+        Pattern p = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+        //Match the given string with the pattern
+        Matcher m = p.matcher(email);
+        //Check whether match is found
+        if(!m.matches()) {
+            throw new IllegalArgumentException("Invalid email address");
+        }
         if(email.length() > 100) {
             throw new IllegalArgumentException("Email cannot have more than 100 characters");
         }
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        // https://regex101.com/library/cFEhad
-//        if(!phone.matches("^(1\\s?)?(\\d{3}|\\(\\d{3}\\))[\\s\\-]?\\d{3}[\\s\\-]?\\d{4}$")) {
-//            throw new IllegalArgumentException("Invalid US phone number");
-//        }
-        this.phone = phone;
     }
 
     public char[] getPassword() {
@@ -96,13 +98,28 @@ public class User {
     }
 
     public void setPassword(char[] password) {
-        // https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-        // https://stackoverflow.com/questions/7655127/how-to-convert-a-char-array-back-to-a-string
         String passwordStr = String.valueOf(password);
-//        if(!passwordStr.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")) {
-//            throw new IllegalArgumentException("Password must include a minimum of eight characters, at least one uppercase letter, one lowercase letter, and one number");
-//        }
+        Pattern p = Pattern.compile("^" +
+                "(?=.*[0-9])" + // a digit must occur at least once
+                "(?=.*[a-z])" + // a lower case letter must occur at least once
+                "(?=.*[A-Z])" + // an upper case letter must occur at least once
+                //"(?=.*[@#$%^&+=])" + // a special character must occur at least once
+                "(?=\\S+$)" + // no whitespace allowed in the entire string
+                ".{8,}" + // anything, at least eight characters
+                "$");
+        Matcher m = p.matcher(passwordStr);
+        if(!m.matches()) {
+            throw new IllegalArgumentException("Password must contain at least 8 characters, with 1 digit, 1 lowercase,and 1 uppercase letter");
+        }
         this.password = passwordStr.toCharArray();
+    }
+
+    public void setPasswordFromDB(String password) {
+        this.password = password.toCharArray();
+    }
+    
+    public void unsetPassword() {
+        this.password = null;
     }
 
     public String getStatus() {
@@ -110,9 +127,20 @@ public class User {
     }
 
     public void setStatus(String status) {
-        if(!status.equals("active") && !status.equals("inactive") && !status.equals("locked")) {
+        if(!status.equals("inactive") && !status.equals("active") && !status.equals("locked")) {
             throw new IllegalArgumentException("Invalid status");
         }
         this.status = status;
+    }
+
+    public String getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(String privileges) {
+        if(!privileges.equals("none") && !privileges.equals("editor") && !privileges.equals("admin") && !privileges.equals("premium")) {
+            throw new IllegalArgumentException("Invalid privileges");
+        }
+        this.privileges = privileges;
     }
 }
