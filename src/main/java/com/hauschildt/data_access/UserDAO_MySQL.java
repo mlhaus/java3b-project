@@ -61,6 +61,7 @@ public class UserDAO_MySQL implements DAO_MySQL<User> {
                     user.setPasswordFromDB(password);
                     user.setStatus(status);
                     user.setPrivileges(privileges);
+                    user.setEmail(email);
                 }
                 resultSet.close();
                 statement.close();
