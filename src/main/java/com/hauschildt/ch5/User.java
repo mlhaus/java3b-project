@@ -114,13 +114,13 @@ public class User {
         this.password = passwordStr.toCharArray();
     }
 
-    public void setPasswordFromDB(String password) {
-        this.password = password.toCharArray();
-    }
-    
-    public void unsetPassword() {
-        this.password = null;
-    }
+public void setPasswordFromDB(String password) {
+    this.password = password.toCharArray();
+}
+
+public void unsetPassword() {
+    this.password = null;
+}
 
     public String getStatus() {
         return status;
