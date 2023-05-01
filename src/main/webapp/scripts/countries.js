@@ -1,3 +1,4 @@
+alert("Hello");
 $(".btn-open").on("click", function() {
     let title = $(this).attr("data-title");
     let population = $(this).attr("data-population");

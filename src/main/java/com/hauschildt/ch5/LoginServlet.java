@@ -19,6 +19,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("loginFailed", false);
+        User whatever = (User)request.getAttribute("whatever");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserDAO_MySQL dao = new UserDAO_MySQL();
@@ -34,6 +35,10 @@ public class LoginServlet extends HttpServlet {
             // User was found
             if(BCrypt.checkpw(password, String.valueOf(user.getPassword()))) {
                 // Match!
+                String whatever2 = request.getParameter("whatever");
+                if(whatever2 == null) {
+                    whatever2 = "";
+                }
                 HttpSession session = request.getSession();
                 request.changeSessionId();
                 user.unsetPassword();

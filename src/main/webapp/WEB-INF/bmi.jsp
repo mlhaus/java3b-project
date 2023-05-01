@@ -1,4 +1,5 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Map<String,String> results = (Map<String,String>)request.getAttribute("results");

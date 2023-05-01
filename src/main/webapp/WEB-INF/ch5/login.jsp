@@ -66,7 +66,7 @@
                 <input id="remember-me" type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-
+        <%-- If the login fails, display an error message --%>
         <% if(loginFailed) { %>
         <div class="alert alert-danger" role="alert">
             Your email and password combination could not be found.
